@@ -1,4 +1,4 @@
-name: Build PNG-128 Font and Release
+name: Build PNG-160 Font and Release
 
 on:
   push:
@@ -44,7 +44,7 @@ jobs:
           python -m pip install -r requirements.txt
 
       - name: Validate emoji source assets
-        run: python size_check.py --png-dir png/128 --skip-svg
+        run: python size_check.py --png-dir png/160 --skip-svg
 
       - name: Build font
         run: bash ./full_rebuild.sh
@@ -53,15 +53,15 @@ jobs:
         shell: bash
         run: |
           du -sh build/emoji build/quantized_pngs build/compressed_pngs
-          ls -lh fonts/NotoColorEmoji.ttf
-          file fonts/NotoColorEmoji.ttf
+          ls -lh fonts/JoyPixelsEmoji.ttf
+          file fonts/JoyPixelsEmoji.ttf
 
       - name: Upload workflow artifact
         uses: actions/upload-artifact@v4
         with:
-          name: noto-color-emoji-png128-${{ github.sha }}
+          name: joypixels-emoji-png160-${{ github.sha }}
           path: |
-            fonts/NotoColorEmoji.ttf
+            fonts/JoyPixelsEmoji.ttf
             fonts/LICENSE
           if-no-files-found: error
 
@@ -85,7 +85,7 @@ jobs:
           tag_name: ${{ steps.meta.outputs.tag }}
           name: ${{ steps.meta.outputs.name }}
           files: |
-            fonts/NotoColorEmoji.ttf
+            fonts/JoyPixelsEmoji.ttf
             fonts/LICENSE
           prerelease: ${{ steps.meta.outputs.prerelease }}
           generate_release_notes: true
